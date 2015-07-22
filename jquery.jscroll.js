@@ -95,11 +95,20 @@
                     iContainerTop = parseInt($e.css('paddingTop'), 10) + borderTopWidthInt,
                     iTopHeight = _isWindow ? _$scroll.scrollTop() : $e.offset().top,
                     innerTop = $inner.length ? $inner.offset().top : 0,
-                    iTotalHeight = Math.ceil(iTopHeight - innerTop + _$scroll.height() + iContainerTop);
+                    iTotalHeight = Math.ceil(iTopHeight - innerTop + _$scroll.height() + iContainerTop),
+                    contentHeight;
 
-                if (!data.waiting && iTotalHeight + _options.padding >= $inner.outerHeight()) {
+                contentHeight = $inner.outerHeight();
+                if (!contentHeight) {
+                    var lastEl = $inner.find(':visible').last();
+                    if (lastEl.length > 0) {
+                        contentHeight = lastEl.position().top + lastEl.height() - $inner.position().top;
+                    }
+                }
+
+                if (!data.waiting && iTotalHeight + _options.padding >= contentHeight) {
                     //data.nextHref = $.trim(data.nextHref + ' ' + _options.contentSelector);
-                    _debug('info', 'jScroll:', $inner.outerHeight() - iTotalHeight, 'from bottom. Loading next request...');
+                    _debug('info', 'jScroll:', contentHeight - iTotalHeight, 'from bottom. Loading next request...');
                     return _load();
                 }
             },
