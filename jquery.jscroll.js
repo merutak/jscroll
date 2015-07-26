@@ -87,6 +87,9 @@
 
             // Observe the scroll event for when to trigger the next load
             _observe = function() {
+                if (!$e.is(':visible')) {
+                    return;
+                }
                 _wrapInnerContent();
                 var $inner = $e.find('div.jscroll-inner').first(),
                     data = $e.data('jscroll'),
