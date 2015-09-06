@@ -217,7 +217,8 @@
 
         // Expose API methods via the jQuery.jscroll namespace, e.g. $('sel').jscroll.method()
         $.extend($e.jscroll, {
-            destroy: _destroy
+            destroy: _destroy,
+            trigger: _load
         });
         return $e;
     };
